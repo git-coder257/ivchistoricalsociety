@@ -1,11 +1,4 @@
 {
-    "presentations": [
-        {
-            "email": "21otingay@ivc.tmet.org.uk",
-            "presentation": "[insert presentation name]"
-        }
-    ],
-    "presentationinterests": [
-
-    ]
+  "presentations": [],
+  "presentationinterests": []
 }
