@@ -5,8 +5,32 @@ const uuid = require("uuid").v4
 const app = express()
 app.use(express.json())
 app.use(express.static("./build"))
+app.use(express.static("./EB499FAE0E869559E394EB775647A51E.txt"))
 
-const PORT = 8080
+const app2 = express()
+app2.use(express.static("./http"))
+
+app2.get("/", (req, res) => {
+    res.sendFile("./http/index.html")
+})
+
+app2.listen(80)
+
+const PORT = 443
+
+var https = require('https');
+
+var https_options = {
+  key: fs.readFileSync("./private_key.key"),
+  cert: fs.readFileSync("./ivchistoricalsociety.com.crt"),
+  ca: [
+
+          fs.readFileSync('./ivchistoricalsociety.com.p7b'),
+          fs.readFileSync('./ivchistoricalsociety.com.ca-bundle')
+       ]
+}
+
+https.createServer(https_options, app).listen(PORT)
 
 app.get("/presentations", (req, res) => {
     try {
@@ -305,6 +329,11 @@ app.get("/presinterests", (req, res) => {
     res.sendFile(`${__dirname}/build/index.html`)
 })
 
-app.listen(PORT, () => {
-    console.log(`Server running on port: ${PORT}`)
+app.get("/.well-known/pki-validation/EB499FAE0E869559E394EB775647A51E.txt", (req, res) => {
+    console.log("hi")
+    res.sendFile(`${__dirname}/EB499FAE0E869559E394EB775647A51E.txt`)
 })
+
+// app.listen(PORT, () => {
+//     console.log(`Server running on port: ${PORT}`)
+// })
